@@ -45,7 +45,7 @@ public class LibraryManagementSystem {
         books.add(new Book("the lost brian", "Yousuf Ali", 997645));
         books.add(new Book("the Stupid Kid", "Omer Nizam", 887587675));
         books.add(new Book("MQM days", "Abdul Aziz", 4457575));
-        books.add(new Book("1965 fight against india", "Khubaib", 277432));
+        books.add(new Book("1962 fight against india", "Khubaib", 277432));
         books.add(new Book("my documentary ", "Abdussamad", 101252));
 
         createGUI();
@@ -77,16 +77,17 @@ public class LibraryManagementSystem {
         JButton displayButton = new JButton("Display Books");
         displayButton.addActionListener(new DisplayBooksListener());
         buttonPanel.add(displayButton);
+        JButton searchButton = new JButton("Search Book");
+        searchButton.addActionListener(new SearchBookListener());
+        buttonPanel.add(searchButton);
 
-
-        displayArea = new JTextArea(10, 20);
+        displayArea = new JTextArea(20, 40);
         displayArea.setEditable(false);
 
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(buttonPanel, BorderLayout.CENTER);
         frame.add(new JScrollPane(displayArea), BorderLayout.SOUTH);
 
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -96,9 +97,7 @@ public class LibraryManagementSystem {
             String title = titleField.getText();
             String author = authorField.getText();
             int id = Integer.parseInt(idField.getText());
-            Book book = new Book(title, author, id);
-            books.add(book);
-            displayArea.append("Book added successfully!\n");
+            books.add(new Book(title, author, id));
             titleField.setText("");
             authorField.setText("");
             idField.setText("");
@@ -108,7 +107,7 @@ public class LibraryManagementSystem {
     private class DisplayBooksListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            displayArea.setText("Books in the library:\n");
+            displayArea.setText("");
             for (Book book : books) {
                 displayArea.append("Title: " + book.getTitle() + ", Author: " + book.getAuthor() + ", ID: " + book.getId() + "\n");
             }
@@ -118,18 +117,23 @@ public class LibraryManagementSystem {
     private class SearchBookListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            String title = titleField.getText();
+            String author = authorField.getText();
             int id = Integer.parseInt(idField.getText());
+            boolean found = false;
+            displayArea.setText("");
             for (Book book : books) {
-                if (book.getId() == id) {
-                    displayArea.setText("Book found: Title: " + book.getTitle() + ", Author: " + book.getAuthor());
-                    return;
+                if (book.getTitle().equals(title) || book.getAuthor().equals(author) || book.getId() == id) {
+                    displayArea.append("Title: " + book.getTitle() + ", Author: " + book.getAuthor() + ", ID: " + book.getId() + "\n");
+                    found = true;
                 }
             }
-            displayArea.setText("No such book was found");
+            if (!found) {
+                displayArea.append("Book not found\n");
+            }
         }
     }
 
     public static void main(String[] args) {
         new LibraryManagementSystem();
     }
-}
