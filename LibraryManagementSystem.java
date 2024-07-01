@@ -45,7 +45,7 @@ public class LibraryManagementSystem {
         books.add(new Book("the lost brian", "Yousuf Ali", 997645));
         books.add(new Book("the Stupid Kid", "Omer Nizam", 887587675));
         books.add(new Book("MQM days", "Abdul Aziz", 4457575));
-        books.add(new Book("1962 fight against india", "Khubaib", 277432));
+        books.add(new Book("1965 fight against india", "Khubaib", 277432));
         books.add(new Book("my documentary ", "Abdussamad", 101252));
 
         createGUI();
